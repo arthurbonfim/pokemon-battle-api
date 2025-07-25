@@ -1,0 +1,32 @@
+# Compiled binaries
+bin/
+obj/
+
+# Rider / VS Code
+.vscode/
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.csproj.user
+*.sln.docstates
+
+# ASP.NET Core user secrets
+**/secrets.json
+
+# Logs
+*.log
+
+# Auto-generated or temporary files
+Generated_*
+*.tmp
+*.bak
+
+# Build results
+*.dll
+*.exe
+
+# OS-specific
+.DS_Store
+Thumbs.db
