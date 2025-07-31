@@ -7,12 +7,12 @@ public class Player
         Username = string.IsNullOrWhiteSpace(username) ? "Player" : username;
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public string Username { get; private set; }
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public string Username { get; set; }
     public const int InitialCredits = 1000;
     public int Credits { get; set; } = InitialCredits;
-    private readonly List<Pokemon> _pokemons = new();
     public const int MaxPokemons = 6;
+    private readonly List<Pokemon> _pokemons = new();
     public IReadOnlyList<Pokemon> Pokemons => _pokemons;
 
 

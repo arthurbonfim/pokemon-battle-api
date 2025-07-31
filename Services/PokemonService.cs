@@ -23,4 +23,13 @@ public class PokemonService
     {
         return FakeDatabase.AvailablePokemons.FirstOrDefault(p => p.Id == id);
     }
+
+    public List<Pokemon> GetPokemonsByIds(IEnumerable<int> ids)
+    {
+        return ids
+            .Select(id => FakeDatabase.AvailablePokemons.FirstOrDefault(p => p.Id == id))
+            .Where(p => p != null)
+            .Cast<Pokemon>()
+            .ToList();
+    }
 }
