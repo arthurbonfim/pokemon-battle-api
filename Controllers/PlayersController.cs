@@ -68,9 +68,9 @@ public class PlayersController : ControllerBase
     [HttpPost("battle")]
     public IActionResult Battle([FromBody] BattleRequestDto resquest)
     {
-        var result = _playersService.Battle(resquest.Player1Id, resquest.Player2Id);
+        var result = _playersService.Battle(resquest.PlayerId, resquest.OpponentId);
         if (result == null)
-            return BadRequest("Invalid Player(s)");
+            return BadRequest("Invalid Player or Opponent ID");
 
         return Ok(result);
     }

@@ -1,6 +1,6 @@
 # 🐱‍👤 Pokémon Battle API
 
-A simple C# REST API built with ASP.NET Core that simulates Pokémon battles between players. Each player can create a team, buy and remove Pokémon, and battle other players based on their team's total power.
+A simple C# REST API built with ASP.NET Core that simulates Pokémon battles between players and classic Pokémon opponents. Each player can create a team, purchase and remove Pokémon, and battle other players based on their team's total power.
 
 ---
 
@@ -49,7 +49,7 @@ A simple C# REST API built with ASP.NET Core that simulates Pokémon battles bet
 
 - Buy/remove Pokémon from a player's team
 
-- Simulate a battle between two players based on total team power
+- Simulate a battle between a player and an opponent(bot), based on total team power
 
 ---
 

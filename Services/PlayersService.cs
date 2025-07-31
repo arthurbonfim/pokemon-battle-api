@@ -66,19 +66,19 @@ public class PlayersService
         player.Credits += pokemon.Cost;
         return true;
     }
-    public BattleResultDto? Battle(Guid player1Id, Guid player2Id)
+    public BattleResultDto? Battle(Guid playerId, int opponentId)
     {
-        var p1 = GetPlayerById(player1Id);
-        var p2 = GetPlayerById(player2Id);
+        var player = GetPlayerById(playerId);
+        var opponent = PredefinedOpponents.Opponents.FirstOrDefault(o => o.Id == opponentId);
 
-        if (p1 == null || p2 == null)
+        if (player == null || opponent == null)
             return null;
 
-        int score1 = p1.Pokemons.Sum(p => p.Power);
-        int score2 = p2.Pokemons.Sum(p => p.Power);
+        int score1 = player.Pokemons.Sum(p => p.Power);
+        int score2 = opponent.Pokemons.Sum(p => p.Power);
 
-        string winner = score1 > score2 ? p1.Username :
-                        score2 > score1 ? p2.Username :
+        string winner = score1 > score2 ? player.Username :
+                        score2 > score1 ? opponent.Name :
                         "Draw";
 
         return new BattleResultDto
