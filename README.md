@@ -49,7 +49,7 @@ A simple C# REST API built with ASP.NET Core that simulates Pokémon battles bet
 
 - Buy/remove Pokémon from a player's team
 
-- Simulate a battle between a player and an opponent(bot), based on total team power
+- Simulate a battle between a player and an opponent (bot), based on total team power
 
 ---
 
