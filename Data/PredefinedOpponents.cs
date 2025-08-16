@@ -10,25 +10,23 @@ public class PredefinedOpponents
 
     public static List<Opponent> Opponents { get; } = new()
     {
-        new Opponent(0, "Team Rocket",
+        new Opponent(0, "Team Rocket", EOpponentDifficulty.Easy,
             _pokemonService.GetPokemonsByIds(new[] {
                 52, // Meowth
                 24, // Arbok
                 110 // Weezing
-            }),
-            EOpponentDifficulty.Easy),
+            })),
 
-        new Opponent(1, "Giovanni",
+        new Opponent(1, "Giovanni", EOpponentDifficulty.Medium,
             _pokemonService.GetPokemonsByIds(new[] {
                 31, // Nidoqueen
                 34, // Nidoking
                 51, // Dugtrio
                 112, // Rhydon
                 130 // Persian
-            }),
-            EOpponentDifficulty.Medium),
+            })),
 
-        new Opponent(2, "Elite Four - Lance",
+        new Opponent(2, "Elite Four - Lance", EOpponentDifficulty.Hard,
             _pokemonService.GetPokemonsByIds(new[] {
                 6,   // Charizard
                 130, // Gyarados
@@ -36,7 +34,6 @@ public class PredefinedOpponents
                 147, // Dratini
                 148, // Dragonair
                 142  // Aerodactyl
-            }),
-            EOpponentDifficulty.Hard),
+            }))
     };
 }

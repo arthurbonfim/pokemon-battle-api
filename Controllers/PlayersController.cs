@@ -1,23 +1,24 @@
 namespace PokemonBattleApi.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using PokemonBattleApi.Dtos;
 using PokemonBattleApi.Models;
 using PokemonBattleApi.Services;
 
-[ApiController] // diz ao aspnet que a classe é um controlador de api
-[Route("api/[controller]")] // define a rota base para acessar os metodos desse controller
+[ApiController]
+[Route("api/[controller]")]
 public class PlayersController : ControllerBase
 {
     private readonly PlayersService _playersService;
 
-    // construtor para poder usar _playerService nos metodos abaixo
     public PlayersController(PlayersService playersService)
     {
         _playersService = playersService;
     }
 
-    // Rota que cria um player e retorna sua locolizacao
+    private readonly ShopService _shopService = new();
+
     [HttpPost]
     public ActionResult<Player> CreatePlayer(CreatePlayerDto dto)
     {
@@ -25,7 +26,6 @@ public class PlayersController : ControllerBase
         return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
     }
 
-    // rota para retornar todos os players
     [HttpGet]
     public ActionResult<List<Player>> GetAllPlayers()
     {
@@ -33,7 +33,6 @@ public class PlayersController : ControllerBase
         return Ok(players);
     }
 
-    // rota que retorna um player pelo id
     [HttpGet("{id}")]
     public ActionResult<Player> GetPlayerById(Guid id)
     {
@@ -44,7 +43,6 @@ public class PlayersController : ControllerBase
         return Ok(player);
     }
 
-    // Adicionar um pokemon ao player
     [HttpPost("{playerId}/pokemons/{pokemonId}")]
     public IActionResult AddPokemonToPlayer(Guid playerId, int pokemonId)
     {
@@ -55,7 +53,6 @@ public class PlayersController : ControllerBase
         return Ok("Pokemon added successfully!");
     }
 
-    // Remover pokemon de um player
     [HttpDelete("{playerId}/pokemons/{pokemonId}")]
     public IActionResult RemovePokemonFromPlayer(Guid playerId, int pokemonId)
     {
@@ -63,6 +60,26 @@ public class PlayersController : ControllerBase
         if (!success)
             return BadRequest("Failed to remove pokemon. Check if the player and pokemon IDs are valid");
         return Ok("Pokemon removed successfully!");
+    }
+
+    [HttpPost("{playerId}/items/{itemId}")]
+    public ActionResult<Item> BuyItem(Guid playerId, int itemId)
+    {
+        bool success = _shopService.PurchaseItem(playerId, itemId, out var message);
+        if (!success)
+        {
+            return BadRequest(message);
+        }
+        return Ok(message);
+    }
+
+    [HttpDelete("{playerId}/items/{itemId}")]
+    public IActionResult RemoveItemFromPlayer(Guid playerId, int itemId)
+    {
+        var success = _shopService.SellItem(playerId, itemId, out var message);
+        if (!success)
+            return BadRequest(message);
+        return Ok(message);
     }
 
     [HttpPost("battle")]
