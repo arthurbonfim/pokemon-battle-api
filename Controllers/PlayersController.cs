@@ -82,10 +82,10 @@ public class PlayersController : ControllerBase
         return Ok(message);
     }
 
-    [HttpPost("battle")]
-    public IActionResult Battle([FromBody] BattleRequestDto resquest)
+    [HttpPost("{playerId}/opponents/{opponentId}/battle")]
+    public IActionResult Battle(Guid playerId, int opponentId)
     {
-        var result = _playersService.Battle(resquest.PlayerId, resquest.OpponentId);
+        var result = _playersService.Battle(playerId, opponentId);
         if (result == null)
             return BadRequest("Invalid Player or Opponent ID");
 
