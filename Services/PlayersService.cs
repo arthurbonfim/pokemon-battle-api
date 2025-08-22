@@ -20,6 +20,32 @@ public class PlayersService
         return player;
     }
 
+    public (bool Success, string Message) DeletePlayer(Guid id)
+    {
+        var player = GetPlayerById(id);
+        if (player == null)
+            return (false, "Player not found");
+
+        FakeDatabase.Players.Remove(player);
+        return (true, "Player deleted successfully");
+    }
+
+    public (bool Success, string Message) UpdatePlayerUsername(Guid playerId, string newUsername)
+    {
+        var player = GetPlayerById(playerId);
+        if (player == null)
+            return (false, "Player not found");
+
+        if (string.IsNullOrWhiteSpace(newUsername))
+            return (false, "Invalid username");
+
+        if (FakeDatabase.Players.Any(p => p.Username.Equals(newUsername, StringComparison.OrdinalIgnoreCase) && p.Id != playerId))
+            return (false, "Username already exists");
+
+        player.UpdateUsername(newUsername);
+        return (true, "Username updated successfully");
+    }
+
     public List<Player> GetAllPlayers()
     {
         return FakeDatabase.Players;

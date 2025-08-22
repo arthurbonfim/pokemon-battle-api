@@ -26,6 +26,26 @@ public class PlayersController : ControllerBase
         return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
     }
 
+    [HttpDelete("{id}")]
+    public IActionResult DeletePlayer(Guid id)
+    {
+        var (success, message) = _playersService.DeletePlayer(id);
+        if (!success)
+            return NotFound();
+
+        return Ok(message);
+    }
+
+    [HttpPatch("{playerId}/{username}")]
+    public IActionResult UpdatePlayerUsername(Guid playerId, string username)
+    {
+        var (success, message) = _playersService.UpdatePlayerUsername(playerId, username);
+        if (!success)
+            return BadRequest(message);
+
+        return Ok(message);
+    }
+
     [HttpGet]
     public ActionResult<List<Player>> GetAllPlayers()
     {
