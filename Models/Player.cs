@@ -1,3 +1,5 @@
+using PokemonBattleApi.Data;
+
 namespace PokemonBattleApi.Models;
 
 public class Player
@@ -8,7 +10,7 @@ public class Player
     }
 
     public Guid Id { get; init; } = Guid.NewGuid();
-    public string Username { get; set; }
+    public string Username { get; private set; }
     public const int InitialCredits = 1000;
     public int Credits { get; set; } = InitialCredits;
     public const int MaxPokemons = 6;
@@ -43,5 +45,12 @@ public class Player
         ArgumentNullException.ThrowIfNull(item);
         if (!_items.Any(i => i.Id == item.Id)) return;
         _items.Remove(item);
+    }
+
+    public void UpdateUsername(string newUsername)
+    {
+        if (string.IsNullOrWhiteSpace(newUsername))
+            throw new ArgumentException("Invalid username", nameof(newUsername));
+        Username = newUsername;
     }
 }
