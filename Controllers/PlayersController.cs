@@ -22,7 +22,9 @@ public class PlayersController : ControllerBase
     [HttpPost]
     public ActionResult<Player> CreatePlayer(CreatePlayerDto dto)
     {
-        var player = _playersService.CreatePlayer(dto);
+        var (success, message, player) = _playersService.CreatePlayer(dto);
+        if (!success || player == null)
+            return BadRequest(message);
         return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
     }
 

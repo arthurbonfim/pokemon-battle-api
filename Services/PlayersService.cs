@@ -13,11 +13,14 @@ public class PlayersService
     }
 
 
-    public Player CreatePlayer(CreatePlayerDto dto)
+    public (bool Success, string Message, Player? Player) CreatePlayer(CreatePlayerDto dto)
     {
+        if (FakeDatabase.Players.Any(p => p.Username.Equals(dto.Username, StringComparison.OrdinalIgnoreCase)))
+            return (false, "Username already exists", null);
+
         var player = new Player(dto.Username);
         FakeDatabase.Players.Add(player);
-        return player;
+        return (true, "Player created successfully", player);
     }
 
     public (bool Success, string Message) DeletePlayer(Guid id)
@@ -36,7 +39,8 @@ public class PlayersService
         if (player == null)
             return (false, "Player not found");
 
-        if (string.IsNullOrWhiteSpace(newUsername))
+        // new username can't already exist and can't be the same as the old one
+        if (string.IsNullOrWhiteSpace(newUsername) || player.Username.Equals(newUsername, StringComparison.OrdinalIgnoreCase))
             return (false, "Invalid username");
 
         if (FakeDatabase.Players.Any(p => p.Username.Equals(newUsername, StringComparison.OrdinalIgnoreCase) && p.Id != playerId))
